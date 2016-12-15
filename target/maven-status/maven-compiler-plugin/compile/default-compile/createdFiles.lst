@@ -1,0 +1,9 @@
+wad\controller\DefaultController.class
+wad\repository\MessageRepository.class
+wad\repository\AccountRepository.class
+wad\HiddenFieldsApplication.class
+wad\service\CustomUserDetailsService.class
+wad\config\SecurityConfiguration.class
+wad\controller\MessageController.class
+wad\domain\Account.class
+wad\domain\Message.class

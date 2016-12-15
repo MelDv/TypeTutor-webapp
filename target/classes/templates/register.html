@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create an account</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" th:href="@{/style/theme.css}"/> 
+    </head>
+    <body class="container">
+        <h1>Create a Typetutor account</h1>
+
+        <form action="#" th:action="@{/typetutor/register}" th:object="${account}" method="POST">
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td><input type="text" th:field="*{email}" /></td>
+                    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="text" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Virheviesti</td>
+                </tr>
+<!--                <tr>
+                    <td>Retype password: </td>
+                    <td><input type="text" th:field="*{repassword}" /></td>
+                    <td th:if="${#fields.hasErrors('repassword')}" th:errors="*{repassword}">Repassword Virheviesti</td>
+                </tr>-->
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

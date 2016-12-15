@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Typetutor</title>
+    </head>
+    <body class="container">
+
+        <header th:fragment="header">
+
+            <table class="table">
+                <tr>
+                    <th><a th:href="@{/typetutor/register}">Create account</a></th>
+                    <th><a th:href="@{/login}">Sign in</a></th>
+                </tr>
+            </table>
+        </header>
+
+    </body>
+</html>

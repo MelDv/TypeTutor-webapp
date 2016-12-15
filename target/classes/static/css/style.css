@@ -1,0 +1,21 @@
+body {
+    background-color: lightblue;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
+
+section header {
+    background-color:dimgrey;
+    color:white;
+    text-align: left;
+    font-family: verdana;
+    font-size: 14px;
+}
