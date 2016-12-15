@@ -1,5 +1,10 @@
-wad\domain\Account.class
 wad\controller\DefaultController.class
 wad\repository\AccountRepository.class
 wad\config\SecurityConfiguration.class
+wad\TypetutorApplication.class
+wad\controller\AccountController.class
+wad\controller\RegisterController.class
+wad\ProductionProfile.class
 wad\service\CustomUserDetailsService.class
+wad\controller\TypetutorController.class
+wad\domain\Account.class
