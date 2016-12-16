@@ -4,6 +4,8 @@ jdk: oraclejdk8
 
 sudo: required
 
+script: mvn -f pom.xml clean verify
+
 deploy:
   provider: heroku
   api_key:
