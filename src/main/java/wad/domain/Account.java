@@ -26,12 +26,11 @@ public class Account extends AbstractPersistable<Long> {
     @NotNull
     @NotBlank
     @Email
-
+    @Column(unique = true)
     private String email;
 
     @NotNull
     @NotBlank
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -55,7 +54,6 @@ public class Account extends AbstractPersistable<Long> {
         return password;
     }
 
-    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
