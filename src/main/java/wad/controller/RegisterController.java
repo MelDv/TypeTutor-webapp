@@ -26,13 +26,17 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String register(@Valid @ModelAttribute("account") Account account,
-            @RequestBody String password, @RequestBody String repassword,
             BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors() || !password.equals(repassword)) {
+        if (bindingResult.hasErrors()) {
             return "redirect:/register";
         }
-
+        
+        Account a = new Account();
+        a.setUsername(account.getUsername());
+        a.setEmail(account.getEmail());
+        a.setPassword(account.getPassword());
+        
         ar.save(account);
         return "redirect:/login";
     }

@@ -25,11 +25,6 @@
                     <td><input type="text" th:field="*{password}" /></td>
                     <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Virheviesti</td>
                 </tr>
-<!--                <tr>
-                    <td>Retype password: </td>
-                    <td><input type="text" th:field="*{repassword}" /></td>
-                    <td th:if="${#fields.hasErrors('repassword')}" th:errors="*{repassword}">Repassword Virheviesti</td>
-                </tr>-->
                 <tr>
                     <td><button type="submit">Submit</button></td>
                 </tr>
