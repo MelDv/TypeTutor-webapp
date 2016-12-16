@@ -26,7 +26,7 @@ public class Account extends AbstractPersistable<Long> {
     @NotNull
     @NotBlank
     @Email
-    @Column(unique = true)
+
     private String email;
 
     @NotNull
