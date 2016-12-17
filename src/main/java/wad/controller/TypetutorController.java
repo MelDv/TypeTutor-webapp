@@ -36,10 +36,7 @@ public class TypetutorController {
         }
 
         Account a = new Account();
-//        a.setUsername("user");
-//        a.setEmail("user@userland.tw");
-//        a.setPassword(pe.encode("4321"));
-//        ac.save(a);
+
 
         a = new Account();
         a.setUsername("teacher");
