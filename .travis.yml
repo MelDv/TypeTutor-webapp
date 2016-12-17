@@ -5,4 +5,5 @@ script: mvn -f pom.xml clean verify
 deploy:
 provider: heroku
 api_key:
-secure: 4cbc0624-6917-4053-93eb-871da4dae2d8
+secure: 644610e5-8184-4bbc-b9e3-9f2a31560033
+# 4cbc0624-6917-4053-93eb-871da4dae2d8
