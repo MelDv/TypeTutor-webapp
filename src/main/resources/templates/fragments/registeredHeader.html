@@ -9,6 +9,7 @@
 
         <header th:fragment="header">
             Logged in as <span sec:authentication="name">Username</span> 
+            <a th:href="@{/}">Main page</a>
             <table class="table">
                 <tr>
                     <th><a th:href="@{/typetutor/account}">My account</a></th>
