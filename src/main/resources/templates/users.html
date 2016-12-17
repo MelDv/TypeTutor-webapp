@@ -20,7 +20,7 @@
             <li th:each="user : ${users}">
                 Username:   <span th:text="${user.username}">name</span><br/>
                 Email:      <span th:text="${user.email}">email</span> 
-                <form th:action="@{/users/{id}(id=${user.id})}" th:method="POST">
+                <form th:action="@{/typetutor/users/{id}(id=${user.id})}" th:method="POST">
                     <input type="submit" value="Delete user"/></form>
             </li>
 

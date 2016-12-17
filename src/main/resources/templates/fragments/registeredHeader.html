@@ -8,18 +8,14 @@
     <body class="container">
 
         <header th:fragment="header">
+            <a th:href="@{/}">Main page  </a>
             Logged in as <span sec:authentication="name">Username</span> 
-            <a th:href="@{/}">Main page</a>
-            <table class="table">
-                <tr>
-                    <th><a th:href="@{/typetutor/account}">My account</a></th>
-                    <th><form method="POST" action="#" th:action="@{/logout}">
-                            <input type="submit" name="logout" value="Logout"/>
-                        </form></th>
-                </tr>
-            </table>
+
+            <a th:href="@{/typetutor/account}">   My account</a>
+            <form method="POST" action="#" th:action="@{/logout}">
+                <input type="submit" name="logout" value="Logout"/>
+            </form>
 
         </header>
-
     </body>
 </html>
