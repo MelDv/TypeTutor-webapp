@@ -3,7 +3,9 @@
     <head>
         <title>Create an account</title>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" th:href="@{/style/theme.css}"/> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
     </head>
     <body class="container">
         <h1>Create a Typetutor account</h1>
@@ -22,7 +24,7 @@
                 </tr>
                 <tr>
                     <td>Password: </td>
-                    <td><input type="text" th:field="*{password}" /></td>
+                    <td><input type="password" th:field="*{password}" /></td>
                     <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Virheviesti</td>
                 </tr>
                 <tr>

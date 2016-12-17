@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    
+
     <body class="container">
         <section id="header">
             <div th:if="${name!=null}">
@@ -26,5 +26,10 @@
         </section>
 
         <div>TODO write content</div>
+
+        <br/><br/><br/>
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <a href="/users">Users</a>
+        </div>
     </body>
 </html>
