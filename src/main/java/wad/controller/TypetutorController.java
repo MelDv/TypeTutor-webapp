@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wad.domain.Account;
@@ -37,13 +38,13 @@ public class TypetutorController {
         Account a = new Account();
         a.setUsername("user");
         a.setEmail("user@userland.tw");
-        a.setPassword(pe.encode("password"));
+        a.setPassword(pe.encode("4321"));
         ac.save(a);
 
         a = new Account();
-        a.setUsername("postman");
+        a.setUsername("teacher");
         a.setEmail("admin@adminland.tw");
-        a.setPassword(pe.encode("pat"));
+        a.setPassword(pe.encode("1234"));
         a.setAuthority("ADMIN");
         ac.save(a);
     }
@@ -51,8 +52,8 @@ public class TypetutorController {
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
-        if (auth.getName() != "anonymousUser") {            
+
+        if (auth.getName() != "anonymousUser") {
             String username = auth.getName();
             model.addAttribute("name", username);
             return "index";
@@ -61,14 +62,19 @@ public class TypetutorController {
         return "index";
     }
 
-//    @Secured("ADMIN")
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String add(@Valid @ModelAttribute Message message, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "login";
-//        }
-//
-//
-//        return "redirect:/typetutor";
-//    }
+    @Secured("ADMIN")
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String listUsers(Model model) {
+        model.addAttribute("users", ac.findAll());
+        return "users";
+    }
+
+    //ei toimi
+    @Secured("ADMIN")
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.POST)
+    public String remove(@PathVariable Long id) {
+        Account account = ac.findOne(id);
+        ac.delete(account);
+        return "redirect:/users";
+    }
 }

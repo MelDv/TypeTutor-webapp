@@ -2,6 +2,7 @@ package wad.controller;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,9 @@ public class RegisterController {
 
     @Autowired
     private AccountRepository ar;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(method = RequestMethod.GET)
     public String form(@ModelAttribute("account") Account account) {
@@ -35,9 +39,9 @@ public class RegisterController {
         Account a = new Account();
         a.setUsername(account.getUsername());
         a.setEmail(account.getEmail());
-        a.setPassword(account.getPassword());
-        
-        ar.save(account);
+        a.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        ar.save(a);
         return "redirect:/login";
     }
 
