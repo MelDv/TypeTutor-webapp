@@ -21,16 +21,19 @@ public class Account extends AbstractPersistable<Long> {
     @NotBlank
     @Length(min = 4, max = 20)
     @Column(unique = true)
+    @JsonProperty
     private String username;
 
     @NotNull
     @NotBlank
     @Email
     @Column(unique = true)
+    @JsonProperty
     private String email;
 
     @NotNull
     @NotBlank
+    @JsonProperty
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -72,5 +75,31 @@ public class Account extends AbstractPersistable<Long> {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.username != null ? this.username.hashCode() : 0);
+        hash = 53 * hash + (this.email != null ? this.email.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Account other = (Account) obj;
+        if ((this.username == null) ? (other.username != null) : !this.username.equals(other.username)) {
+            return false;
+        }
+        if ((this.email == null) ? (other.email != null) : !this.email.equals(other.email)) {
+            return false;
+        }
+        return true;
     }
 }
