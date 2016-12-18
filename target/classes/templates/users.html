@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.springframework.org/security/tags">
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>Typetutor</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body class="container">
+
+        <header th:replace="fragments/registeredHeader :: header"></header>
+
+        <h2>Welcome admin <span sec:authentication="name">Username</span> </h2>
+        <h3>Be carefull with those changes.</h3>
+
+        <ol>
+            <li th:each="user : ${users}">
+                Username:   <span th:text="${user.username}">name</span><br/>
+                Email:      <span th:text="${user.email}">email</span> 
+                <form th:action="@{/typetutor/users/{id}(id=${user.id})}" th:method="POST">
+                    <input type="submit" value="Delete user"/></form>
+            </li>
+
+        </ol>
+
+    </body>
+</html>
