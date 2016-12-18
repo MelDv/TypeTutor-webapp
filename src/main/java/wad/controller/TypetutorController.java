@@ -28,26 +28,26 @@ public class TypetutorController {
     @Autowired
     private PasswordEncoder pe;
 
-    @PostConstruct
-    public void init() {
-
-        if (ac.findByUsername("teacher") != null) {
-            return;
-        }
-
-        Account a = new Account();
-        a.setUsername("user");
-        a.setEmail("user@userland.tw");
-        a.setPassword(pe.encode("4321"));
-        ac.save(a);
-
-        a = new Account();
-        a.setUsername("teacher");
-        a.setEmail("admin@adminland.tw");
-        a.setPassword(pe.encode("1234"));
-        a.setAuthority("ADMIN");
-        ac.save(a);
-    }
+//    @PostConstruct
+//    public void init() {
+//
+//        if (ac.findByUsername("teacher") != null) {
+//            return;
+//        }
+//
+//        Account a = new Account();
+//        a.setUsername("user");
+//        a.setEmail("user@userland.tw");
+//        a.setPassword(pe.encode("4321"));
+//        ac.save(a);
+//
+//        a = new Account();
+//        a.setUsername("teacher");
+//        a.setEmail("admin@adminland.tw");
+//        a.setPassword(pe.encode("1234"));
+//        a.setAuthority("ADMIN");
+//        ac.save(a);
+//    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
@@ -69,12 +69,11 @@ public class TypetutorController {
         return "users";
     }
 
-    //ei toimi
     @Secured("ADMIN")
     @RequestMapping(value = "/users/{id}", method = RequestMethod.POST)
     public String remove(@PathVariable Long id) {
         Account account = ac.findOne(id);
         ac.delete(account);
-        return "redirect:/users";
+        return "users";
     }
 }
