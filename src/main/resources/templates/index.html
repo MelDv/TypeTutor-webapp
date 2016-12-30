@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:layout="http://www.thymeleaf.org"
       xmlns:th="http://www.thymeleaf.org" 
       xmlns:sec="http://www.springframework.org/security/tags">
     <head lang="en">
@@ -25,11 +26,82 @@
             </div>
         </section>
 
-        <div>TODO write content</div>
+        <section id="instructions">
+            <h3>Type the text below inside the text box. Start by pressing the start button.</h3>
+            <p>Register or sign in to automatically save your progress.</p>
+            <br/>            
+            <form th:action="@{/typetutor}" th:method="POST"> 
+                <input id="start" type="submit" value="Start!" onclick=" changeText()"/>
+            </form>
+            <br/>
+
+            <section id="type">
+                <span id="typeThis" th:text="${nextText}">Type this text.</span>
+                <br/>
+                <input id="inputChar" type="text" placeholder="Type here" onkeypress=" getCharacter(event)"/>
+
+                <div id="stats">
+                    Points: <span id="points" th:text="${points}">0</span>
+                    Level: <span th:text="${level}">0</span>
+                </div>
+            </section>
+        </section>
 
         <br/><br/><br/>
         <div sec:authorize="hasAuthority('ADMIN')">
             <a href="/typetutor/users">Users</a>
         </div>
+
+        <script type="text/javascript" th:inline="javascript">
+            var typeThis;
+            var points = 0;
+
+            function getCharacter(e) {
+                typeThis = document.getElementById("typeThis").innerHTML;
+                var keynum;
+
+                if (window.event) { // IE                    
+                    keynum = e.keyCode;
+                } else if (e.which) { // Netscape/Firefox/Opera                   
+                    keynum = e.which;
+                }
+
+                var char = String.fromCharCode(keynum);
+                var typeChar = typeThis.substring(0, 1);
+
+                if (char === typeChar) {
+                    points = points + 1;
+                } else {
+                    points = points - 1;
+                }
+
+                document.getElementById("points").innerHTML = points;
+                typeThis = typeThis.substring(1);
+                document.getElementById("typeThis").innerHTML = typeThis;
+                document.getElementById("inputChar").innerHTML = char;
+                
+                if (typeThis.length === 0) {
+                    // new string from java
+                }
+            }
+
+            function changeText() {
+                document.getElementById("start").value = "New string";
+            }
+
+//                    var dataToSend = JSON.stringify({
+//                        points: document.getElementById("points").value
+//                    });
+//
+//                    $.ajax({
+//                        url: "https://floating-chamber-68433.herokuapp.com/typetutor",
+//                        dataType: 'json',
+//                        contentType: 'application/json; charset=utf-8',
+//                        type: 'post',
+//                        data: dataToSend
+//                    });
+
+        </script>
     </body>
 </html>
+

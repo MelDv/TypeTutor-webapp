@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wad.domain.Account;
+import wad.logic.Game;
 
 import wad.repository.AccountRepository;
 
@@ -23,31 +24,32 @@ import wad.repository.AccountRepository;
 public class TypetutorController {
 
     @Autowired
-    private AccountRepository ac;
+    private AccountRepository accountRepository;
 
     @Autowired
-    private PasswordEncoder pe;
+    private PasswordEncoder passwordEncoder;
+    private Account account;
+    private Game game;
 
-//    @PostConstruct
-//    public void init() {
-//
-//        if (ac.findByUsername("teacher") != null) {
-//            return;
-//        }
-//
-//        Account a = new Account();
-//        a.setUsername("user");
-//        a.setEmail("user@userland.tw");
-//        a.setPassword(pe.encode("4321"));
-//        ac.save(a);
-//
-//        a = new Account();
-//        a.setUsername("teacher");
-//        a.setEmail("admin@adminland.tw");
-//        a.setPassword(pe.encode("1234"));
-//        a.setAuthority("ADMIN");
-//        ac.save(a);
-//    }
+    @PostConstruct
+    public void init() {
+        if (accountRepository.findByUsername("teacher") != null) {
+            return;
+        }
+
+        Account a = new Account();
+        a.setUsername("user");
+        a.setEmail("user@userland.tw");
+        a.setPassword(passwordEncoder.encode("4321"));
+        accountRepository.save(a);
+
+        a = new Account();
+        a.setUsername("teacher");
+        a.setEmail("admin@adminland.tw");
+        a.setPassword(passwordEncoder.encode("1234"));
+        a.setAuthority("ADMIN");
+        accountRepository.save(a);
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
@@ -55,6 +57,7 @@ public class TypetutorController {
 
         if (auth.getName() != "anonymousUser") {
             String username = auth.getName();
+            this.account = accountRepository.findByUsername(username);
             model.addAttribute("name", username);
             return "index";
         }
@@ -62,18 +65,18 @@ public class TypetutorController {
         return "index";
     }
 
-    @Secured("ADMIN")
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String listUsers(Model model) {
-        model.addAttribute("users", ac.findAll());
-        return "users";
-    }
+    @RequestMapping(method = RequestMethod.POST)
+    public String typeThis(Model model) {
+        if (this.account == null) {
+            account = new Account();
+        }
+        game = new Game(account);
+        game.determineTypeThis();
 
-    @Secured("ADMIN")
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.POST)
-    public String remove(@PathVariable Long id) {
-        Account account = ac.findOne(id);
-        ac.delete(account);
-        return "users";
+        model.addAttribute("points", account.getPoints());
+        model.addAttribute("level", account.getLevel());
+        model.addAttribute("nextText", game.getTypeThis());
+
+        return "index";
     }
 }

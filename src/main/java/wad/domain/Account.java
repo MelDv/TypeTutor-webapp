@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 public class Account extends AbstractPersistable<Long> {
@@ -36,12 +37,18 @@ public class Account extends AbstractPersistable<Long> {
     @JsonProperty
     private String password;
 
+    private int points;
+    private int level;
+    private String salt;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
 
     public Account() {
-        authorities = new ArrayList<>();
-        authorities.add("USER");
+        this.authorities = new ArrayList<>();
+        this.authorities.add("USER");
+        this.points = 0;
+        this.level = 0;
     }
 
     public String getUsername() {
@@ -75,6 +82,50 @@ public class Account extends AbstractPersistable<Long> {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    /**
+     * Adds a point to the user's points.
+     */
+    public void addPoint() {
+        setPoints(getPoints() + 1);
+    }
+
+    /**
+     * Deletes a point from the user's points.
+     */
+    public void deductPoint() {
+        setPoints(getPoints() - 1);
+    }
+
+    /**
+     * Counts the level by dividing user's points with 200. The level can only
+     * grow.
+     *
+     * @return level as an integer.
+     */
+    public int countLevelbyPoints() {
+        int temp = points / 200;
+        if (level < temp) {
+            level = temp;
+        }
+        return level;
     }
 
     @Override
