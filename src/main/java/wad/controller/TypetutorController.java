@@ -22,27 +22,27 @@ import wad.repository.AccountRepository;
 @Controller
 @RequestMapping("/typetutor")
 public class TypetutorController {
-
+    
     @Autowired
     private AccountRepository accountRepository;
-
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
     private Account account;
     private Game game;
-
+    
     @PostConstruct
     public void init() {
-        if (accountRepository.findByUsername("teacher") != null) {
+        if (accountRepository.findByUsername("teacher") != null || accountRepository.findByUsername("user") != null) {
             return;
         }
-
+        
         Account a = new Account();
         a.setUsername("user");
         a.setEmail("user@userland.tw");
         a.setPassword(passwordEncoder.encode("4321"));
         accountRepository.save(a);
-
+        
         a = new Account();
         a.setUsername("teacher");
         a.setEmail("admin@adminland.tw");
@@ -50,11 +50,11 @@ public class TypetutorController {
         a.setAuthority("ADMIN");
         accountRepository.save(a);
     }
-
+    
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        
         if (auth.getName() != "anonymousUser") {
             String username = auth.getName();
             this.account = accountRepository.findByUsername(username);
@@ -64,7 +64,7 @@ public class TypetutorController {
         model.addAttribute("name", null);
         return "index";
     }
-
+    
     @RequestMapping(method = RequestMethod.POST)
     public String typeThis(Model model) {
         if (this.account == null) {
@@ -72,11 +72,12 @@ public class TypetutorController {
         }
         game = new Game(account);
         game.determineTypeThis();
-
+        
         model.addAttribute("points", account.getPoints());
         model.addAttribute("level", account.getLevel());
         model.addAttribute("nextText", game.getTypeThis());
-
+        model.addAttribute("name", account.getUsername());
+        
         return "index";
     }
 }
